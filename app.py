@@ -1,32 +1,17 @@
-
 import streamlit as st
 import numpy as np
 from PIL import Image
 import tensorflow as tf
 from tensorflow.keras.models import load_model
 # Import the FocalLoss class definition directly
-# from focal_loss import FocalLoss # Removed this import
 
-# Removed global FocalLoss definition
-
-
+from focal_loss import FocalLoss  # Assuming focal_loss.py is in the same directory
 # Load model with custom objects
 # @st.cache_resource # Removed caching decorator
 def load_model_with_custom_objects():
     # Define the FocalLoss class directly inside the function
     class FocalLoss(tf.keras.losses.Loss):
-        """
-        Focal Loss for addressing class imbalance in medical datasets
-
-        Formula:
-            Focal Loss = -α(1 - p_t)^γ * log(p_t)
-
-        Where:
-        - p_t is the predicted probability for the true class.
-        - α is the balancing factor to give more weight to underrepresented classes.
-        - γ (gamma) reduces the loss contribution from easy examples and focuses on hard examples.
-        """
-
+      
         # Constructor: initialize alpha, gamma, and any additional kwargs
         def __init__(self, alpha=1.0, gamma=2.0, **kwargs):
             super().__init__(**kwargs)
